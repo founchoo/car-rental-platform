@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.dart.carrentalplatform.mapper.CarMapper">
+
+    <select id="getAllCars" resultType="com.dart.carrentalplatform.entity.Car">
+        SELECT *
+        FROM cars;
+    </select>
+    <update id="updateCar" parameterType="com.dart.carrentalplatform.entity.Car">
+        UPDATE cars
+        SET
+        car_price = #{carPrice}
+        WHERE car_id = #{carId};
+    </update>
+    <insert id="addCar" parameterType="com.dart.carrentalplatform.entity.Car">
+        INSERT INTO cars (car_id, car_price)
+        VALUES (#{carId}, #{carPrice});
+    </insert>
+    <delete id="deleteCar" parameterType="com.dart.carrentalplatform.entity.Car">
+        DELETE FROM cars
+        WHERE car_id = #{carId};
+    </delete>
+    <select id="getCarById" resultType="com.dart.carrentalplatform.entity.Car">
+        SELECT *
+        FROM cars
+        WHERE car_id = #{carId};
+    </select>
+</mapper>
