@@ -31,10 +31,10 @@ public class CarController {
         return carService.getAllCars();
     }
 
-    @RequestMapping(value = "/searchCar", method = POST)
+    @RequestMapping(value = "/searchCars", method = POST)
     @ResponseBody
     @ApiOperation("获取指定id的车辆")
-    public Car getCarById(@RequestParam String key) {
+    public List<Car> searchCars(@RequestParam String key) {
         return carService.searchCars(key);
     }
 

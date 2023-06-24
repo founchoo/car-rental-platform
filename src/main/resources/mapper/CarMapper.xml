@@ -29,6 +29,10 @@
     <select id="searchCars" resultType="com.dart.carrentalplatform.entity.Car">
         SELECT *
         FROM cars
-        WHERE id = #{id};
+        WHERE brand LIKE CONCAT('%', #{brand}, '%')
+        OR model LIKE CONCAT('%', #{model}, '%')
+        OR color LIKE CONCAT('%', #{color}, '%')
+        OR price LIKE CONCAT('%', #{price}, '%')
+        OR status LIKE CONCAT('%', #{status}, '%');
     </select>
 </mapper>
