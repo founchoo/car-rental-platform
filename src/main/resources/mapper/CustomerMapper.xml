@@ -14,10 +14,10 @@
         name = #{name},
         phone = #{phone},
         card = #{card}
-        WHERE customer_id = #{id};
+        WHERE id = #{id};
     </update>
     <insert id="addCustomer" parameterType="com.dart.carrentalplatform.entity.Customer">
-        INSERT INTO customers (customer_id, name, phone, card)
+        INSERT INTO customers (id, name, phone, card)
         VALUES (#{id}, #{name}, #{phone}, #{card});
     </insert>
     <delete id="deleteCustomer" parameterType="com.dart.carrentalplatform.entity.Customer">

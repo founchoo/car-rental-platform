@@ -1,16 +1,18 @@
 server:
-  port: 9842
+  port: 7856
   max-http-header-size: 102400
 
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://110.41.176.195:3306/crp
+    url: jdbc:mysql://110.41.176.195:3306/crp?useSSL=false
     username: crp
     password: sC6jJstDhKKfysZ8
 
   mvc:
     static-path-pattern: /**
+    pathmatch:
+      matching-strategy: ant_path_matcher
 
 mybatis:
   mapper-locations: classpath*:mapper/*.xml

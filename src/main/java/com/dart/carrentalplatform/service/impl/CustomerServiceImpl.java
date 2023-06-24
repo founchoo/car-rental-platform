@@ -2,7 +2,7 @@ package com.dart.carrentalplatform.service.impl;
 
 import com.dart.carrentalplatform.entity.Customer;
 import com.dart.carrentalplatform.mapper.CustomerMapper;
-import com.dart.carrentalplatform.service.CustomerService;
+import com.dart.carrentalplatform.service.ICustomerService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -14,7 +14,7 @@ import java.util.List;
  * @since 6/22/2023 4:27 PM
  */
 @Service
-public class CustomerServiceImpl implements CustomerService {
+public class CustomerServiceImpl implements ICustomerService {
 
     @Resource
     private CustomerMapper customerMapper;

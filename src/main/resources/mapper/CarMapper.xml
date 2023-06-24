@@ -11,20 +11,24 @@
     <update id="updateCar" parameterType="com.dart.carrentalplatform.entity.Car">
         UPDATE cars
         SET
-        car_price = #{carPrice}
-        WHERE car_id = #{carId};
+        brand = #{brand},
+        model = #{model},
+        color = #{color},
+        price = #{price},
+        status = #{status}
+        WHERE id = #{id};
     </update>
     <insert id="addCar" parameterType="com.dart.carrentalplatform.entity.Car">
-        INSERT INTO cars (car_id, car_price)
-        VALUES (#{carId}, #{carPrice});
+        INSERT INTO cars (id, brand, model, color, price, status)
+        VALUES (#{id}, #{brand}, #{model}, #{color}, #{price}, #{status});
     </insert>
     <delete id="deleteCar" parameterType="com.dart.carrentalplatform.entity.Car">
         DELETE FROM cars
-        WHERE car_id = #{carId};
+        WHERE id = #{id};
     </delete>
-    <select id="getCarById" resultType="com.dart.carrentalplatform.entity.Car">
+    <select id="searchCars" resultType="com.dart.carrentalplatform.entity.Car">
         SELECT *
         FROM cars
-        WHERE car_id = #{carId};
+        WHERE id = #{id};
     </select>
 </mapper>

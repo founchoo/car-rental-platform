@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.dart.carrentalplatform.mapper.TeacherMapper">
+
+    <select id="getAllTeachers" resultType="com.dart.carrentalplatform.entity.Teacher">
+        SELECT *
+        FROM teacher;
+    </select>
+    <update id="updateTeacher" parameterType="com.dart.carrentalplatform.entity.Teacher">
+        UPDATE teacher
+        SET
+        id = #{id},
+        name = #{name},
+        gender = #{gender},
+        age = #{age},
+        dept = #{dept},
+        address = #{address}
+        WHERE id = #{id};
+    </update>
+    <insert id="addTeacher" parameterType="com.dart.carrentalplatform.entity.Teacher">
+        INSERT INTO teacher (id, name, gender, age, dept, address)
+        VALUES (#{id}, #{name}, #{gender}, #{age}, #{dept}, #{address});
+    </insert>
+    <delete id="deleteTeacher" parameterType="com.dart.carrentalplatform.entity.Teacher">
+        DELETE FROM teacher
+        WHERE id = #{id};
+    </delete>
+    <select id="getTeacherById" resultType="com.dart.carrentalplatform.entity.Teacher">
+        SELECT *
+        FROM teacher
+        WHERE id = #{id};
+    </select>
+    <select id="getProComputerTeachers" resultType="com.dart.carrentalplatform.entity.Teacher">
+        SELECT *
+        FROM teacher
+        WHERE age > 30 AND dept = '计算机';
+    </select>
+
+</mapper>
