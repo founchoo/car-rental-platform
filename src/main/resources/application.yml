@@ -4,7 +4,6 @@ server:
 
 spring:
   datasource:
-    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://110.41.176.195:3306/crp?useSSL=false
     username: crp
     password: sC6jJstDhKKfysZ8
@@ -16,3 +15,8 @@ spring:
 
 mybatis:
   mapper-locations: classpath*:mapper/*.xml
+
+mybatis-plus:
+  global-config:
+    db-config:
+      logic-delete-field: deleted

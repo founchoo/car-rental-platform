@@ -1,6 +1,8 @@
 package com.dart.carrentalplatform.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dart.carrentalplatform.entity.Car;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -10,11 +12,5 @@ import java.util.List;
  * @project car-rental-platform
  * @since 6/22/2023 12:40 PM
  */
-@Repository
-public interface CarMapper {
-    List<Car> getAllCars();
-    void addCar(int id, String brand, String model, String color, double price, String status);
-    void deleteCar(int id);
-    void updateCar(int id, String brand, String model, String color, double price, String status);
-    List<Car> searchCars(String key);
+public interface CarMapper extends BaseMapper<Car> {
 }

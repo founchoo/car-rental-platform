@@ -1,7 +1,10 @@
 package com.dart.carrentalplatform.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dart.carrentalplatform.entity.Car;
-import com.dart.carrentalplatform.service.ICarService;
+import com.dart.carrentalplatform.service.CarService;
+import com.dart.carrentalplatform.util.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,56 +13,69 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
-
 /**
  * @author Dart
  * @project car-rental-platform
  * @since 6/22/2023 12:13 PM
  */
 @Controller
+@RequestMapping("/car")
 @Api
 public class CarController {
 
     @Autowired
-    private ICarService carService;
+    private CarService carService;
 
-    @RequestMapping(value = "/getCars", method = POST)
+    @GetMapping
     @ResponseBody
     @ApiOperation("获取全部车辆")
-    public List<Car> getCars() {
-        return carService.getAllCars();
+    public Response getAllCars() {
+        List<Car> list = carService.list(null);
+        return Response.success().setData("list", list);
     }
 
-    @RequestMapping(value = "/searchCars", method = POST)
+    @GetMapping("/search")
     @ResponseBody
-    @ApiOperation("获取指定id的车辆")
-    public List<Car> searchCars(@RequestParam String key) {
-        return carService.searchCars(key);
+    @ApiOperation("模糊查找车辆")
+    public Response searchCars(@RequestParam String key) {
+        QueryWrapper<Car> wrapper = new QueryWrapper<Car>();
+        List<Car> list = carService.list(
+                wrapper.like("id", key).or()
+                        .like("brand", key).or()
+                        .like("model", key).or()
+                        .like("color", key).or()
+                        .like("price", key).or()
+                        .like("status", key));
+        return Response.success().setData("list", list);
     }
 
     @ResponseBody
-    @RequestMapping(value = "/addCar", method = POST)
+    @PostMapping
     @ApiOperation("添加车辆")
-    public void addCar(@RequestBody Car car) {
-        carService.addCar(
-                car.getId(), car.getBrand(), car.getModel(),
-                car.getColor(), car.getPrice(), car.getStatus());
+    public Response addCar(@RequestBody Car car) {
+        return carService.save(car) ? Response.success() : Response.fail();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/updateCar", method = POST)
+    @PutMapping
     @ApiOperation("更新车辆")
-    public void updateCar(@RequestBody Car car) {
-        carService.updateCar(
-                car.getId(), car.getBrand(), car.getModel(),
-                car.getColor(), car.getPrice(), car.getStatus());
+    public Response updateCar(@RequestBody Car car) {
+        return carService.updateById(car) ? Response.success() : Response.fail();
     }
 
     @ResponseBody
-    @RequestMapping(value = "/deleteCar", method = POST)
+    @DeleteMapping
     @ApiOperation("删除车辆")
-    public void deleteCar(@RequestParam int id) {
-        carService.deleteCar(id);
+    public Response deleteCar(@RequestParam int id) {
+        return carService.removeById(id) ? Response.success() : Response.fail();
+    }
+
+    @ResponseBody
+    @GetMapping("/getCarByPage")
+    @ApiOperation("分页查询数据")
+    public Response getCarByPage(@RequestParam int start, @RequestParam int size) {
+        Page<Car> page = new Page<>(start, size);
+        carService.page(page);
+        return Response.success().setData("page", page);
     }
 }

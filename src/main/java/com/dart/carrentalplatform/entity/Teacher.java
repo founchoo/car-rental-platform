@@ -9,10 +9,11 @@ import lombok.Data;
  */
 @Data
 public class Teacher {
-    private int id;
+    private Integer id;
     private String name;
     private String gender;
-    private int age;
+    private Integer age;
     private String dept;
     private String address;
+    private Boolean deleted;
 }

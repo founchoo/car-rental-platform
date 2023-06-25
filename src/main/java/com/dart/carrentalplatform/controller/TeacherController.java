@@ -1,13 +1,13 @@
 package com.dart.carrentalplatform.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dart.carrentalplatform.entity.Teacher;
-import com.dart.carrentalplatform.service.ITeacherService;
+import com.dart.carrentalplatform.service.TeacherService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -20,55 +20,55 @@ import static org.springframework.web.bind.annotation.RequestMethod.POST;
  * @since 6/24/2023 6:04 PM
  */
 @Controller
+@RequestMapping("/teacher")
 @Api("教师管理")
 public class TeacherController {
 
     @Autowired
-    private ITeacherService teacherService;
+    private TeacherService teacherService;
 
-    @RequestMapping(value = "/getTeachers", method = GET)
+    @GetMapping
     @ResponseBody
     @ApiOperation("获取全部教师")
     public List<Teacher> getTeachers() {
-        return teacherService.getAllTeachers();
+        return teacherService.list();
     }
 
-    @RequestMapping(value = "/getTeacherById", method = GET)
+    @GetMapping("/getTeacherById")
     @ResponseBody
     @ApiOperation("获取指定id的教师")
-    public Teacher getTeacherById(int id) {
-        return teacherService.getTeacherById(id);
+    public Teacher getTeacherById(@RequestParam int id) {
+        return teacherService.getById(id);
     }
 
-    @RequestMapping(value = "/addTeacher", method = POST)
+    @PostMapping
     @ResponseBody
     @ApiOperation("添加教师")
-    public void addTeacher(Teacher teacher) {
-        teacherService.addTeacher(
-                teacher.getId(), teacher.getName(), teacher.getGender(),
-                teacher.getAge(), teacher.getDept(), teacher.getAddress());
+    public void addTeacher(@RequestBody Teacher teacher) {
+        teacherService.save(teacher);
     }
 
-    @RequestMapping(value = "/updateTeacher", method = POST)
+    @PutMapping
     @ResponseBody
     @ApiOperation("更新教师")
-    public void updateTeacher(Teacher teacher) {
-        teacherService.updateTeacher(
-                teacher.getId(), teacher.getName(), teacher.getGender(),
-                teacher.getAge(), teacher.getDept(), teacher.getAddress());
+    public void updateTeacher(@RequestBody Teacher teacher) {
+        teacherService.updateById(teacher);
     }
 
-    @RequestMapping(value = "/deleteTeacher", method = POST)
+    @DeleteMapping
     @ResponseBody
     @ApiOperation("删除教师")
-    public void deleteTeacher(int id) {
-        teacherService.deleteTeacher(id);
+    public void deleteTeacher(@RequestParam int id) {
+        teacherService.removeById(id);
     }
 
-    @RequestMapping(value = "/getProComputerTeachers", method = GET)
+    @GetMapping(value = "/getProComputerTeachers")
     @ResponseBody
     @ApiOperation("获取计算机专业教师")
     public List<Teacher> getProComputerTeachers() {
-        return teacherService.getProComputerTeachers();
+        QueryWrapper<Teacher> wrapper = new QueryWrapper<Teacher>();
+        return teacherService.list(
+                wrapper.ge("age", 30)
+                        .eq("dept", "计算机"));
     }
 }

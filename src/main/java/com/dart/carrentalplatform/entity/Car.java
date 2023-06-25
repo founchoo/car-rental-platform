@@ -11,10 +11,11 @@ import lombok.Setter;
  */
 @Data
 public class Car {
-    private int id;
-    private double price;
+    private Integer id;
+    private Double price;
     private String brand;
     private String model;
     private String status;
     private String color;
+    private Boolean deleted;
 }

@@ -9,8 +9,9 @@ import lombok.Data;
  */
 @Data
 public class Customer {
-    private int id;
+    private Integer id;
     private String card;
     private String name;
     private String phone;
+    private Boolean deleted;
 }
