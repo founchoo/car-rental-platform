@@ -1,8 +1,11 @@
 package com.dart.carrentalplatform.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.dart.carrentalplatform.entity.Car;
 import com.dart.carrentalplatform.entity.Teacher;
 import com.dart.carrentalplatform.service.TeacherService;
+import com.dart.carrentalplatform.util.Response;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,45 +33,55 @@ public class TeacherController {
     @GetMapping
     @ResponseBody
     @ApiOperation("获取全部教师")
-    public List<Teacher> getTeachers() {
-        return teacherService.list();
+    public Response getTeachers() {
+        return Response.success().setData("list", teacherService.list(null));
     }
 
     @GetMapping("/getTeacherById")
     @ResponseBody
     @ApiOperation("获取指定id的教师")
-    public Teacher getTeacherById(@RequestParam int id) {
-        return teacherService.getById(id);
+    public Response getTeacherById(@RequestParam int id) {
+        return Response.success().setData("teacher", teacherService.getById(id));
     }
 
     @PostMapping
     @ResponseBody
     @ApiOperation("添加教师")
-    public void addTeacher(@RequestBody Teacher teacher) {
-        teacherService.save(teacher);
+    public Response addTeacher(@RequestBody Teacher teacher) {
+        return teacherService.save(teacher) ? Response.success() : Response.fail();
     }
 
     @PutMapping
     @ResponseBody
     @ApiOperation("更新教师")
-    public void updateTeacher(@RequestBody Teacher teacher) {
-        teacherService.updateById(teacher);
+    public Response updateTeacher(@RequestBody Teacher teacher) {
+        return teacherService.updateById(teacher) ? Response.success() : Response.fail();
     }
 
     @DeleteMapping
     @ResponseBody
     @ApiOperation("删除教师")
-    public void deleteTeacher(@RequestParam int id) {
-        teacherService.removeById(id);
+    public Response deleteTeacher(@RequestParam int id) {
+        return teacherService.removeById(id) ? Response.success() : Response.fail();
     }
 
     @GetMapping(value = "/getProComputerTeachers")
     @ResponseBody
     @ApiOperation("获取计算机专业教师")
-    public List<Teacher> getProComputerTeachers() {
+    public Response getProComputerTeachers() {
         QueryWrapper<Teacher> wrapper = new QueryWrapper<Teacher>();
-        return teacherService.list(
-                wrapper.ge("age", 30)
-                        .eq("dept", "计算机"));
+        return Response.success().setData("list",
+                teacherService.list(
+                        wrapper.ge("age", 30)
+                                .eq("dept", "计算机")));
+    }
+
+    @ResponseBody
+    @GetMapping("/getTeacherByPage")
+    @ApiOperation("分页查询数据")
+    public Response getCarByPage(@RequestParam int start, @RequestParam int size) {
+        Page<Teacher> page = new Page<>(start, size);
+        teacherService.page(page);
+        return Response.success().setData("page", page);
     }
 }

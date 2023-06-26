@@ -30,7 +30,6 @@ public class CustomerController {
     @ResponseBody
     @ApiOperation("获取全部客户")
     public Response getAllCustomers() {
-        List<Customer> list = customerService.list(null);
-        return Response.success().setData("list", list);
+        return Response.success().setData("list", customerService.list(null));
     }
 }
