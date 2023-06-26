@@ -6,6 +6,8 @@ import io.swagger.annotations.Api;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Objects;
+
 /**
  * @author Dart
  * @project car-rental-platform
@@ -13,9 +15,9 @@ import org.springframework.web.bind.annotation.*;
  */
 @Controller
 @CrossOrigin
-@RequestMapping("/vue-element-admin/user")
+@RequestMapping("/user")
 @Api
-public class HomeController {
+public class UserController {
 
     @PostMapping("/login")
     @ResponseBody
@@ -26,11 +28,15 @@ public class HomeController {
     @GetMapping("/info")
     @ResponseBody
     public Response getInfo(@RequestParam String token) {
-        return Response.success()
-                .setData("roles", "[admin, editor]")
-                .setData("name", "摘叶飞镖")
-                .setData("avatar", "https://s3.bmp.ovh/imgs/2023/06/26/22777ab7bec47493.jpg")
-                .setData("introduction", "个人介绍");
+        if (Objects.equals(token, "vue_admin_template_token")) {
+            return Response.success()
+                    .setData("roles", "[admin]")
+                    .setData("name", "Super Admin")
+                    .setData("avatar", "https://s3.bmp.ovh/imgs/2023/06/26/22777ab7bec47493.jpg")
+                    .setData("introduction", "个人介绍");
+        } else {
+            return Response.fail();
+        }
     }
 
     @PostMapping("/logout")

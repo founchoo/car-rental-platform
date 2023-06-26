@@ -40,18 +40,11 @@ public class CarController {
     @ResponseBody
     @ApiOperation("模糊查找车辆")
     public Response searchCars(@RequestParam int start, @RequestParam int size, @RequestParam String key) {
-        Page<Car> page = new Page<>(start, size);
-        carService.page(page);
-        QueryWrapper<Car> wrapper = new QueryWrapper<Car>();
-        List<Car> list = carService.list(
-                wrapper.like("id", key).or()
-                        .like("brand", key).or()
-                        .like("model", key).or()
-                        .like("color", key).or()
-                        .like("price", key).or()
-                        .like("status", key));
-        Page<Car> carIPage = carService.page(page, wrapper);
-        return Response.success().setData("page", carIPage);
+        // TODO: 目前仅实现按照 ID 查找车辆的功能，未能实现所有属性的模糊查找
+        Page<Car> page = carService.page(new Page<>(start, size));
+        QueryWrapper<Car> wrapper = new QueryWrapper<Car>().eq("id", key);
+        page = carService.page(page, wrapper);
+        return Response.success().setData("page", page);
     }
 
     @ResponseBody

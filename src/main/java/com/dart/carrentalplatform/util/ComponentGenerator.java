@@ -11,7 +11,7 @@ import java.util.Collections;
  * @project car-rental-platform
  * @since 6/26/2023 9:46 AM
  */
-public class ProjectGenerator {
+public class ComponentGenerator {
 
     private static final String URL = "jdbc:mysql://110.41.176.195:3306/crp?useSSL=false";
     private static final String USERNAME = "crp";
