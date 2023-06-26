@@ -1,6 +1,7 @@
 package com.dart.carrentalplatform.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.dart.carrentalplatform.entity.Car;
 import com.dart.carrentalplatform.service.CarService;
@@ -19,6 +20,7 @@ import java.util.List;
  * @since 6/22/2023 12:13 PM
  */
 @Controller
+@CrossOrigin
 @RequestMapping("/car")
 @Api
 public class CarController {
@@ -37,7 +39,9 @@ public class CarController {
     @GetMapping("/search")
     @ResponseBody
     @ApiOperation("模糊查找车辆")
-    public Response searchCars(@RequestParam String key) {
+    public Response searchCars(@RequestParam int start, @RequestParam int size, @RequestParam String key) {
+        Page<Car> page = new Page<>(start, size);
+        carService.page(page);
         QueryWrapper<Car> wrapper = new QueryWrapper<Car>();
         List<Car> list = carService.list(
                 wrapper.like("id", key).or()
@@ -46,7 +50,8 @@ public class CarController {
                         .like("color", key).or()
                         .like("price", key).or()
                         .like("status", key));
-        return Response.success().setData("list", list);
+        Page<Car> carIPage = carService.page(page, wrapper);
+        return Response.success().setData("page", carIPage);
     }
 
     @ResponseBody
@@ -74,8 +79,7 @@ public class CarController {
     @GetMapping("/getCarByPage")
     @ApiOperation("分页查询数据")
     public Response getCarByPage(@RequestParam int start, @RequestParam int size) {
-        Page<Car> page = new Page<>(start, size);
-        carService.page(page);
+        Page<Car> page = carService.page(new Page<>(start, size));
         return Response.success().setData("page", page);
     }
 }
