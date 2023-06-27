@@ -20,7 +20,6 @@ import java.util.List;
  * @since 6/22/2023 12:13 PM
  */
 @Controller
-@CrossOrigin
 @RequestMapping("/car")
 @Api
 public class CarController {
@@ -40,11 +39,13 @@ public class CarController {
     @ResponseBody
     @ApiOperation("模糊查找车辆")
     public Response searchCars(@RequestParam int start, @RequestParam int size, @RequestParam String key) {
-        // TODO: 目前仅实现按照 ID 查找车辆的功能，未能实现所有属性的模糊查找
-        Page<Car> page = carService.page(new Page<>(start, size));
-        QueryWrapper<Car> wrapper = new QueryWrapper<Car>().eq("id", key);
-        page = carService.page(page, wrapper);
-        return Response.success().setData("page", page);
+        return Response.success().setData("page", carService.page(new Page<>(start, size),
+                new QueryWrapper<Car>()
+                        .like("id", key).or()
+                        .like("brand", key).or()
+                        .like("model", key).or()
+                        .like("color", key).or()
+                        .like("price", key)));
     }
 
     @ResponseBody
@@ -72,7 +73,6 @@ public class CarController {
     @GetMapping("/getCarByPage")
     @ApiOperation("分页查询数据")
     public Response getCarByPage(@RequestParam int start, @RequestParam int size) {
-        Page<Car> page = carService.page(new Page<>(start, size));
-        return Response.success().setData("page", page);
+        return Response.success().setData("page", carService.page(new Page<>(start, size)));
     }
 }

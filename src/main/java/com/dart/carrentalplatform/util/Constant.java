@@ -11,4 +11,6 @@ public class Constant {
 
     public static final String SUCCESS_MSG = "操作成功";
     public static final String FAIL_MSG = "操作失败";
+
+    public static final String SECRET_KEY = "xIcr-9AeSlfQLGJ";
 }

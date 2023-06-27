@@ -20,3 +20,7 @@ mybatis-plus:
   global-config:
     db-config:
       logic-delete-field: deleted
+  configuration:
+    #关闭配置数据库下划线字段转驼峰
+    map-underscore-to-camel-case: false
+

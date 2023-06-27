@@ -20,7 +20,6 @@ import java.util.List;
  * @since 6/24/2023 4:22 PM
  */
 @Controller
-@CrossOrigin
 @RequestMapping("/customer")
 @Api
 public class CustomerController {
@@ -40,11 +39,12 @@ public class CustomerController {
     @ResponseBody
     @ApiOperation("模糊查找客户")
     public Response searchCustomers(@RequestParam int start, @RequestParam int size, @RequestParam String key) {
-        // TODO: 目前仅实现按照 ID 查找客户的功能，未能实现所有属性的模糊查找
-        Page<Customer> page = customerService.page(new Page<>(start, size));
-        QueryWrapper<Customer> wrapper = new QueryWrapper<Customer>().eq("id", key);
-        page = customerService.page(page, wrapper);
-        return Response.success().setData("page", page);
+        return Response.success().setData("page", customerService.page(new Page<>(start, size),
+                new QueryWrapper<Customer>()
+                        .like("id", key).or()
+                        .like("name", key).or()
+                        .like("card", key).or()
+                        .like("phone", key)));
     }
 
     @ResponseBody
@@ -72,7 +72,6 @@ public class CustomerController {
     @GetMapping("/getCustomerByPage")
     @ApiOperation("分页查询数据")
     public Response getCarByPage(@RequestParam int start, @RequestParam int size) {
-        Page<Customer> page = customerService.page(new Page<>(start, size));
-        return Response.success().setData("page", page);
+        return Response.success().setData("page", customerService.page(new Page<>(start, size)));
     }
 }

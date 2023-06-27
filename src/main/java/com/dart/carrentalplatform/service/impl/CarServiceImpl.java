@@ -6,9 +6,6 @@ import com.dart.carrentalplatform.mapper.CarMapper;
 import com.dart.carrentalplatform.service.CarService;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.List;
-
 /**
  * @author Dart
  * @project car-rental-platform
