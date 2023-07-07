@@ -1,18 +1,18 @@
 package com.dart.carrentalplatform.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
+import com.dart.carrentalplatform.entity.VehicleInfo;
+
 import com.github.yulichang.base.MPJBaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
-import com.dart.carrentalplatform.entity.Order;
-
 /**
- * @author Dart
+ * @author Lin
  * @project car-rental-platform
- * @since 6/22/2023 12:40 PM
+ * @since 6/30/2023
  */
 @Mapper
 @Repository
-public interface OrderMapper extends MPJBaseMapper<Order> {
+public interface VehicleInfoMapper extends MPJBaseMapper<VehicleInfo> {
 }

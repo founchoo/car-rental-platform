@@ -8,18 +8,22 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
- * @author Dart
- * @project car-rental-platform
- * @since 6/26/2023 2:07 PM
+ *
+ * @author Dart Lin
+ * @since 2023-06-30
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor
 @AllArgsConstructor
-@TableName("user")
-public class User extends BaseEntity {
-    private String username;
-    private String password;
-    private String lasttime;
-    private String ip;
+@TableName("vehicle_maintenance")
+//车辆保养信息
+public class VehicleMaintenance extends BaseEntity {
+    /*
+     * 车辆ID
+     */
+    private String vid;
+    private Integer maintenance_fee;
+    private Integer maintenance_times;
 }
+

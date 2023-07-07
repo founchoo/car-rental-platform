@@ -13,28 +13,18 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 public class CORSConfig {
+    private CorsConfiguration buildConfig() {
+        CorsConfiguration corsConfiguration = new CorsConfiguration();
+        corsConfiguration.addAllowedOrigin("*"); // 设置访问源地址
+        corsConfiguration.addAllowedHeader("*"); // 设置访问源请求头
+        corsConfiguration.addAllowedMethod("*"); // 设置访问源请求方法
+        return corsConfiguration;
+    }
+
     @Bean
-    public CorsFilter corsFilter(){
-        CorsConfiguration config=new CorsConfiguration();
-        //放行哪些原始域
-        config.addAllowedOrigin("http://localhost:9527");
-        //是否发送cookie信息
-        config.setAllowCredentials(true);
-        //放行哪些原始域请求方式
-        config.addAllowedMethod("OPTIONS");
-        config.addAllowedMethod("HEAD");
-        config.addAllowedMethod("GET");
-        config.addAllowedMethod("PUT");
-        config.addAllowedMethod("POST");
-        config.addAllowedMethod("DELETE");
-        config.addAllowedMethod("PATCH");
-        //放行哪些头信息
-        config.addAllowedHeader("*");
-        //添加映射路径,拦截所有请求
-        UrlBasedCorsConfigurationSource configSource
-                =new UrlBasedCorsConfigurationSource();
-        configSource.registerCorsConfiguration("/**",config);
-        //返回新的CoreFilter
-        return new CorsFilter(configSource);
+    public CorsFilter corsFilter() {
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", buildConfig()); // 对接口配置跨域设置
+        return new CorsFilter(source);
     }
 }

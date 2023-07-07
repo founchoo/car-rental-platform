@@ -17,14 +17,14 @@ import static com.dart.carrentalplatform.util.Constant.SUCCESS_MSG;
 @Data
 @Accessors(chain = true)
 public class Response {
-    private String msg;
+    private String message;
     private Integer code;
     private Boolean isSuccess;
     private Map<String, Object> data;
 
     public static Response success() {
         return new Response()
-                .setMsg(SUCCESS_MSG)
+                .setMessage(SUCCESS_MSG)
                 .setIsSuccess(true)
                 .setCode(Constant.SUCCESS_CODE)
                 .setData(new HashMap<>());
@@ -32,8 +32,8 @@ public class Response {
 
     public static Response fail() {
         return new Response()
-                .setMsg(FAIL_MSG)
-                .setIsSuccess(true)
+                .setMessage(FAIL_MSG)
+                .setIsSuccess(false)
                 .setCode(Constant.FAIL_CODE)
                 .setData(new HashMap<>());
     }

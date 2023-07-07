@@ -20,5 +20,4 @@ public class CarRentalPlatformApplication {
     public static void main(String[] args) {
         SpringApplication.run(CarRentalPlatformApplication.class, args);
     }
-
 }

@@ -1,19 +1,23 @@
 package com.dart.carrentalplatform.controller;
 
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.dart.carrentalplatform.entity.User;
 import com.dart.carrentalplatform.service.UserService;
 import com.dart.carrentalplatform.util.EncryptUtil;
 import com.dart.carrentalplatform.util.JwtUtil;
 import com.dart.carrentalplatform.util.Response;
-import io.swagger.annotations.Api;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
 
 /**
  * @author Dart
@@ -22,11 +26,7 @@ import java.util.Objects;
  */
 @Controller
 @RequestMapping("/user")
-@Api
-public class UserController {
-
-    @Autowired
-    private UserService userService;
+public class UserController extends BaseController<UserService, User> {
 
     @PostMapping("/login")
     @ResponseBody
@@ -34,9 +34,9 @@ public class UserController {
         QueryWrapper<User> wrapper = new QueryWrapper<User>()
                 .eq("username", user.getUsername())
                 .eq("password", EncryptUtil.encrypt(user.getPassword()));
-        User one = userService.getOne(wrapper);
+        User one = service.getOne(wrapper);
         if (one == null) {
-            return Response.fail();
+            return Response.fail().setMessage("登录失败，请检查用户名和（或）密码");
         } else {
             return Response.success().setData("token", JwtUtil.createToken(one));
         }

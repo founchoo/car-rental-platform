@@ -1,7 +1,10 @@
 package com.dart.carrentalplatform.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.dart.carrentalplatform.entity.Teacher;
+import com.github.yulichang.base.MPJBaseMapper;
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
 import com.dart.carrentalplatform.entity.User;
 
 /**
@@ -9,6 +12,8 @@ import com.dart.carrentalplatform.entity.User;
  * @project car-rental-platform
  * @since 6/27/2023 9:38 AM
  */
-public interface UserMapper extends BaseMapper<User> {
+@Mapper
+@Repository
+public interface UserMapper extends MPJBaseMapper<User> {
 
 }
