@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -24,7 +25,7 @@ public class VehicleInfo extends BaseEntity {
     private String manufacturer;
     private String brand;
     private boolean energy_type;
-    private Date buy_time;
+    private String buy_time;
     private Integer rental_fee;
     private Integer buy_price;
     private Boolean accident;

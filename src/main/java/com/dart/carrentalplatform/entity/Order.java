@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -34,9 +35,9 @@ public class Order extends BaseEntity {
      */
     private String manager;
     private String rent_address;
-    private Date rent_date;
+    private String rent_date;
     private String return_address;
-    private Date return_date;
+    private String return_date;
     /**
      * 总租借费用
      */

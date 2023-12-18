@@ -23,4 +23,3 @@ mybatis-plus:
   configuration:
     #关闭配置数据库下划线字段转驼峰
     map-underscore-to-camel-case: false
-

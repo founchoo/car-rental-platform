@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -23,5 +24,5 @@ public class FinancialStatementIncome {
     private String brand; // 品牌
     private Integer total_distance; // 总里程
     private Integer total_rental_fee; // 出租费用
-    private Date rent_date; // 出租时间
+    private String rent_date; // 出租时间
 }

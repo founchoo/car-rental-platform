@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import com.baomidou.mybatisplus.annotation.TableName;
@@ -26,7 +27,7 @@ public class CustomerInfo extends BaseEntity {
     private Integer age;
     private String phone;
     private Boolean gender;
-    private Date birthday;
+    private String birthday;
     private String address;
     private Integer violate_count;
     private Integer accident_count;
